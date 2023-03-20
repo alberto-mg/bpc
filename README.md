@@ -1,7 +1,7 @@
-# Il linguaggio
-Il linguaggio su cui lavora il compilatore è uno pseudo-codice che implementa tutti i costrutti della programmazione strutturata: sequenza, selezione, iterazione. Prevede come tipi di dato Intero (range degli int di C), Reale (range dei double di C), Carattere, Stringa, inoltre non supporta alcuno tipo di dato strutturato.
+# The language
+The language on which the compiler works is a psuedo-code that implements all the constructs of structured programming: sequence, selection, iteration. The language has four different data types: Intero (equals to *int* of C), Reale (equals to *double* of C), Carattere (equals to *char* of C), and Stringa (equals to an array of *char* of C), furthermore it doesn't support any type of structured data type.
 
-## BNF della grammatica
+## BNF of the grammar
 ```
 <statements> ::= <statement> "\n" | <statement> "\n" <statements>
 
@@ -32,7 +32,7 @@ Il linguaggio su cui lavora il compilatore è uno pseudo-codice che implementa t
 <logicop> ::= "AND" | "OR"
 ```
 
-### Esempio codice
+### Code example
 ```
 Intero a
 Intero b
@@ -53,32 +53,32 @@ STAMPA <- "L'MCD e' "
 STAMPA <- a
 ```
 
-## Funzionamento
+## Functioning
 
 ### MENTRE
 ```
 MENTRE <condition> ALLORA <!
-	[blocco]
+	[block]
 !>
 ```
-Il costrutto equivale a un ciclo precondizionato, dove viene prima valutata la condizione e se vera viene eseguito il codice.
+The construct is the equivalent of a preconditioned while, where the condition is at first evaluated and if it's true the block is executed.
 
 ### SE-ALTRIMENTI
 ```
 SE <condition> ALLORA <!
-	[blocco true]
+	[true block]
 !> ALTRIMENTI <!
-	[blocco false]
+	[false block]
 !>
 ```
-Il costrutto equivale a un if-then-else, è presente anche if-then nel linguaggio, è sufficiente omettere "ALTRIMENTI".
+The construct is the equivalent of an if-then-else, it can be used also an if-then, by not writing "ALTRIMENTI".
 
 ### I/O
 ```
 LEGGI -> <id>
 STAMPA <- <val>
 ```
-L'input viene fatto tramite la keyword "LEGGI", mentre l'output con "STAMPA", questa permette la concatenazione tramite l'operatore +, solo tra tipi Stringa e Carattere:
+The input is given with the keyword "LEGGI", while the output with "STAMPA", which permits the concatenation with the operator +, only between Stringa and Carattere:
 ```
 Stringa a
 Stringa b
@@ -87,64 +87,64 @@ LEGGI -> b
 STAMPA <- + a b
 ```
 
-### Condizioni
-SI possono concatenare più condizioni nei MENTRE e nei SE, questo viene fatto tramite gli operatori logici "AND" e "OR". Non è possibile stabilire l'ordine tramite le parentesi, quindi si tratta sempre di una verifica short-circuit da sinsitra verso destra.
+### Conditions
+In the conditions of MENTRE and SE constructs, more conditions can be concatenated with the logical operator AND and OR. It is not possible to establish a priority with parenthesis, so the evaluation is done in short-circuit from left to right.
 ```
-MENTRE a < 0 AND continua = 1 <!
+MENTRE a < 0 AND continue = 1 <!
 	[blocco]
 !>
 ```
-Gli operatori di confronto disponibili sono: <, <=, >, >=, =, !=.
+The comparing operators available are: <, <=, >, >=, =, !=.
 
-### Operatori aritmetici
-Gli operatori aritmetici se utilizzati su Intero, Reale o Carattere hanno il loro classico funzinamento quindi:
-- \+ : somma;
-- \- : differenza;
-- \* : prodotto;
-- / : divisione;
-- % : modulo;
+### Arithmetical operators
+The arithmetical operators use on Intero, Reale or Carattere have the classic functioning:
+- \+ : sum;
+- \- : difference;
+- \* : product;
+- / : division;
+- % : module;
 
-Quando vengono utilizzati con tipi Stringa hanno un comportamento diverso:
-- \+ : concatenazione
+If these are use on Stringa, they have the following behavior:
+- \+ : concatenation
 ```
 + <val>.Carattere/<val>.Stringa <val>.Carattere/<val>.Stringa
 ```
-- \- : restituisce la stringa con n caratteri rimossi dalla fine
+- \- : it returns the Stringa with n chars removed from right
 ```
 - <val>.Stringa <val>.Intero
 ```
-- \* : restituisce il carattere nella posizione specificata, se non è presente ritorna 0
+- \* : it returns the char in the specified position, if the index is not valid, it returns 0
 ```
 * <val>.Stringa <val>.Intero
 ```
-- / : restituisce la stringa con n caratteri rimossi dall'inizio
+- / : it returns the Stringa with n chars removed from left
 ```
 / <val>.Stringa <val>.Intero
 ```
-- % : restituisce 1 se la stringa o il carattere passato è una sottostringa
+- % : it returns 1 if the Stringa or Carattere given is a substring
 ```
 % <val>.Stringa <val>.Carattere/<val>.Stringa
 ```
 
-### Compatibilità fra tipi
+### Types compatibility
 
-#### Assegnamenti
-Gli assegnamenti validi, considerando il primo come tipo del left value e il secondo come tipo del right value, sono:
+#### Assignments
+The valid assignments, considering the first as the left value and the second as the right, are:
 - Intero: Intero, Reale, Carattere;
 - Reale: Intero, Reale, Carattere;
 - Carattere: Intero, Reale, Carattere;
 - Stringa: Carattere, Stringa.
 
-#### Confronti
-I confronti validi, considerando il primo come tipo del left value e il secondo come tipo del right value, sono:
+#### Comparisons
+The valid comparisons, considering the first as the left value and the second as the right, are:
 - Intero: Intero, Reale, Carattere;
 - Reale: Intero, Reale, Carattere;
 - Carattere: Intero, Reale, Carattere;
 - Stringa: Stringa.
 
-#### Operazioni
-Le operazioni definiscono il tipo dell'espressione finale quindi, considerando i casi in cui sono diversi:
-- Intero-Carattere: valutato come Intero;
-- Reale-Intero/Carattere : valutato come Reale;
-- Stringa-Carattere: valutato come Stringa in caso di +, in caso di % come Intero;
-- Stringa-Intero: valutato come Carattere in caso di \*, come Stringa in caso di - o /; 
+#### Operations
+The operations define the final data type of the expressions, so, considering the cases where the data types are different:
+- Intero-Carattere: evaluated as Intero;
+- Reale-Intero/Carattere : evaluated as Reale;
+- Stringa-Carattere: evaluated as Stringa in case of +, in case of % as Intero;
+- Stringa-Intero: evaluated as Stringa in case of \*, as Stringa in case of - or /. 
